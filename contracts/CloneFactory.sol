@@ -11,7 +11,7 @@ contract CloneFactory is Ownable {
     address[] public implementations;
 
     event NewImplementationAdded(address implementation, string details);
-    event NewNFT(address instance);
+    event NewClone(address instance);
 
     function addImplementation(address _implementation, string memory _details) public onlyOwner {
         require(Address.isContract(_implementation), "Err: Implementation address not a contract");
@@ -40,7 +40,7 @@ contract CloneFactory is Ownable {
         if (initdata.length > 0) {
             instance.functionCallWithValue(initdata, msg.value);
         }
-        emit NewNFT(instance);
+        emit NewClone(instance);
         return instance;
     }
 }

@@ -3,7 +3,7 @@ import { ERC721DaoToken } from "../../typechain/ERC721DaoToken";
 import { Artifact } from "hardhat/types";
 import hre from "hardhat";
 
-export function shouleBehaveLikeCloneFactory(): void {
+export function shouldBehaveLikeCloneFactory(): void {
   it("Should add an implementation to registry", async function () {
     await expect(
       this.cloneFactory
@@ -26,12 +26,17 @@ export function shouleBehaveLikeCloneFactory(): void {
 
     // create call data for clone
     const iFace = new hre.ethers.utils.Interface(erc721DaoTokenArtifact.abi);
-    const calldata = iFace.encodeFunctionData("initialize", ["TokenName", "TokenSymbol"]);
+    const calldata = iFace.encodeFunctionData("initialize", [
+      "TokenName",
+      "TokenSymbol",
+      this.roles,
+      this.rolesAssignees,
+    ]);
 
     // make the clone
     const tx = await this.cloneFactory.clone(0, calldata);
     const receipt = await tx.wait();
-    const cloneAddress = receipt.events?.find(({ event }) => event == "NewNFT")?.args?.instance;
+    const cloneAddress = receipt.events?.find(({ event }) => event == "NewClone")?.args?.instance;
 
     // attach address as NFT
     const nft = <ERC721DaoToken>(

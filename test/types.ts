@@ -10,9 +10,13 @@ declare module "mocha" {
     cloneFactory: CloneFactory;
     loadFixture: <T>(fixture: Fixture<T>) => Promise<T>;
     signers: Signers;
+    roles: string[];
+    rolesAssignees: string[];
   }
 }
 
 export interface Signers {
   admin: SignerWithAddress;
+  minter: SignerWithAddress;
+  burner: SignerWithAddress;
 }
