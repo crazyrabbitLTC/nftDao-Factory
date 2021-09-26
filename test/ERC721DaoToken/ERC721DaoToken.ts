@@ -3,8 +3,8 @@ import { Artifact } from "hardhat/types";
 import { SignerWithAddress } from "@nomiclabs/hardhat-ethers/dist/src/signer-with-address";
 
 import { ERC721DaoToken } from "../../typechain/ERC721DaoToken";
+import { shouldBehaveLikeERC721DaoToken } from "./ERC721DaoToken.behavior";
 import { Signers } from "../types";
-import { expect } from "chai";
 
 const { deployContract } = hre.waffle;
 
@@ -22,13 +22,6 @@ describe("Unit tests", function () {
       this.ERC721DaoToken = <ERC721DaoToken>await deployContract(this.signers.admin, erc721DaoTokenArtifact, []);
     });
 
-    it("it should initialize to the correct name only once", async function () {
-      await this.ERC721DaoToken.initialize("TokenName", "TN");
-      expect(await this.ERC721DaoToken.connect(this.signers.admin).name()).to.equal("TokenName");
-      expect(await this.ERC721DaoToken.connect(this.signers.admin).symbol()).to.equal("TN");
-      await expect(this.ERC721DaoToken.initialize("TokenName", "TN")).to.be.reverted;
-    });
-
-    // shouldBehaveLikeGreeter();
+    shouldBehaveLikeERC721DaoToken();
   });
 });
