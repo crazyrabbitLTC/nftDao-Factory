@@ -13,7 +13,7 @@ const { deployContract } = hre.waffle;
 const keccak256 = hre.ethers.utils.keccak256;
 const toUtf8Bytes = hre.ethers.utils.toUtf8Bytes;
 
-describe("Unit tests", function () {
+xdescribe("Unit tests", function () {
   before(async function () {
     this.signers = {} as Signers;
 

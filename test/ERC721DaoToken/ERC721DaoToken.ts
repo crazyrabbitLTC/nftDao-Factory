@@ -17,6 +17,7 @@ describe("Unit tests", function () {
 
     const signers: SignerWithAddress[] = await hre.ethers.getSigners();
     this.signers.admin = signers[0];
+    this.signers.user = signers[1];
   });
 
   describe("ERC721DaoToken", function () {

@@ -19,4 +19,5 @@ export interface Signers {
   admin: SignerWithAddress;
   minter: SignerWithAddress;
   burner: SignerWithAddress;
+  user: SignerWithAddress;
 }

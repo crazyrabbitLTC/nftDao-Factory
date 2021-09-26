@@ -12,7 +12,7 @@ contract ERC721DaoToken is ERC721Checkpointable, AccessControlUpgradeable {
     bytes32 public constant BASE_URI_ROLE = keccak256("BASE_URI_ROLE");
     bytes32 public constant ADMIN_ROLE = keccak256("ADMIN_ROLE");
 
-    string public baseURI;
+    string public baseURI = "";
 
     event BaseURIChanged(string newURI);
 
