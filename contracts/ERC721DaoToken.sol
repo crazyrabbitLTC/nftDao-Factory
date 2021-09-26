@@ -7,10 +7,6 @@ import "@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol"
 import "@openzeppelin/contracts-upgradeable/utils/StringsUpgradeable.sol";
 import "./ERC721Checkpointable.sol";
 
-interface IURIManager {
-    function getURI(address tokenContract, uint256 tokenId) external returns (string calldata);
-}
-
 contract ERC721DaoToken is ERC721Checkpointable, AccessControlUpgradeable {
     using StringsUpgradeable for uint256;
 
@@ -20,10 +16,6 @@ contract ERC721DaoToken is ERC721Checkpointable, AccessControlUpgradeable {
     bytes32 public constant ADMIN_ROLE = keccak256("ADMIN_ROLE");
 
     string public baseURI = "";
-
-    bool public isURIExternal = false;
-
-    IURIManager public URIManager;
 
     event BaseURIChanged(string newURI);
 
@@ -49,9 +41,7 @@ contract ERC721DaoToken is ERC721Checkpointable, AccessControlUpgradeable {
         string memory name_,
         string memory symbol_,
         bytes32[] memory roles,
-        address[] memory rolesAssignees,
-        bool isURIExternal_,
-        IURIManager externalURIManager
+        address[] memory rolesAssignees
     ) public initializer {
         __ERC721_init(name_, symbol_);
 
@@ -67,11 +57,6 @@ contract ERC721DaoToken is ERC721Checkpointable, AccessControlUpgradeable {
         for (uint256 i = 0; i < roles.length; i++) {
             _setupRole(roles[i], rolesAssignees[i]);
         }
-
-        if (isURIExternal_) {
-            isURIExternal = true;
-            URIManager = externalURIManager;
-        }
     }
 
     function mint(address to, uint256 tokenId) public justByRole(MINTER_ROLE) {
@@ -85,15 +70,6 @@ contract ERC721DaoToken is ERC721Checkpointable, AccessControlUpgradeable {
 
     function _baseURI() internal view override returns (string memory) {
         return baseURI;
-    }
-
-    /**
-     * @dev Overwrite the existing tokenURI to account for external function managing this
-     */
-    function tokenURI(uint256 tokenId) public view virtual override returns (string memory) {
-        require(_exists(tokenId), "ERC721Metadata: URI query for nonexistent token");
-        string memory URI = _baseURI();
-        return bytes(URI).length > 0 ? string(abi.encodePacked(URI, tokenId.toString())) : "";
     }
 
     function burn(uint256 tokenId) public justByRole(BURNER_ROLE) {
