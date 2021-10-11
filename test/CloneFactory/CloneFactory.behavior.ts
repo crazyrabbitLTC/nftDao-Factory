@@ -29,6 +29,7 @@ export function shouldBehaveLikeCloneFactory(): void {
     const calldata = iFace.encodeFunctionData("initialize", [
       "TokenName",
       "TokenSymbol",
+      "TokenMetadata",
       this.roles,
       this.rolesAssignees,
     ]);

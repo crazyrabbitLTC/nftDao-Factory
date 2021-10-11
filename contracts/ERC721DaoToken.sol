@@ -16,6 +16,7 @@ contract ERC721DaoToken is ERC721Checkpointable, AccessControlUpgradeable {
     bytes32 public constant ADMIN_ROLE = keccak256("ADMIN_ROLE");
 
     string public baseURI = "";
+    string public contractInfo = "";
 
     event BaseURIChanged(string newURI);
 
@@ -40,10 +41,13 @@ contract ERC721DaoToken is ERC721Checkpointable, AccessControlUpgradeable {
     function initialize(
         string memory name_,
         string memory symbol_,
+        string memory contractInfo_,
         bytes32[] memory roles,
         address[] memory rolesAssignees
     ) public initializer {
         __ERC721_init(name_, symbol_);
+
+        contractInfo = contractInfo_;
 
         require(roles.length == rolesAssignees.length, "Err::initializer: roles assignment arity mismatch");
 

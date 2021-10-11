@@ -34,7 +34,7 @@ describe("Unit tests", function () {
 
       const erc721DaoTokenArtifact: Artifact = await hre.artifacts.readArtifact("ERC721DaoToken");
       this.ERC721DaoToken = <ERC721DaoToken>await deployContract(this.signers.admin, erc721DaoTokenArtifact, []);
-      await this.ERC721DaoToken.initialize("TokenName", "TN", this.roles, this.rolesAssignees);
+      await this.ERC721DaoToken.initialize("TokenName", "TN", "TokenMetadata", this.roles, this.rolesAssignees);
     });
 
     shouldBehaveLikeERC721DaoToken();
