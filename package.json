@@ -81,5 +81,8 @@
   "dependencies": {
     "@openzeppelin/contracts": "^4.3.2",
     "@openzeppelin/contracts-upgradeable": "^4.3.2"
-  }
+  },
+  "workspaces": [
+    "./subgraph/"
+  ]
 }
